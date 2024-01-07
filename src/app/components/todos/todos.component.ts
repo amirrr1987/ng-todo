@@ -15,7 +15,18 @@ export class TodosComponent {
 todos= [
   {
     id: 1,
-    label: "Job 1"
-  }
+    label: "Job 1",
+    complete: false
+  },
+  {
+    id: 2,
+    label: "Job 2",
+    complete: true
+  },
+  {
+    id: 3,
+    label: "Job 3",
+    complete: false
+  },
 ]
 }

@@ -11,6 +11,7 @@ import {FormsModule} from "@angular/forms";
 export class NewTodoComponent {
   tempTodo: string = ""
   sendTodo($event:any){
-    console.log($event)
+    console.log()
+this.tempTodo = ""
   }
 }

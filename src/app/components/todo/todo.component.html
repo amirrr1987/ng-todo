@@ -1,4 +1,6 @@
-<li class="list-group-item d-flex gap-4">
+<li class="list-group-item d-flex gap-4"  >
+  <input  class="form-check-input" type="checkbox" [(ngModel)]="todo.complete">
   <span>{{todo.id}}</span>
-  <span>{{todo.label}}</span>
+  <span [ngClass]="todo.complete ? 'text-decoration-line-through' : ''">{{todo.label}}</span>
 </li>
+
