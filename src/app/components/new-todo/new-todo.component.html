@@ -1,4 +1,4 @@
-<form (ngSubmit)="sendTodo($event)">
+<form (ngSubmit)="sendTodo()">
   <div class="d-flex gap-4 my-5">
     <input type="text" class="form-control" id="InputTodo" aria-describedby="todoHelp" [(ngModel)]="tempTodo"
       [ngModelOptions]="{standalone: true}">

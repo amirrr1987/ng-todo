@@ -1,4 +1,4 @@
 <ul class="list-group">
-<app-new-todo></app-new-todo>
-<app-todo *ngFor="let item of todos" [todo]="item"></app-todo>
+    <app-new-todo (updateTodo)="addNewTodo($event)"></app-new-todo>
+    <app-todo *ngFor="let item of todos" [todo]="item" (remove)="removeTodo($event)"></app-todo>
 </ul>

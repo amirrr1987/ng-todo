@@ -1,6 +1,6 @@
-<li class="list-group-item d-flex gap-4"  >
-  <input  class="form-check-input" type="checkbox" [(ngModel)]="todo.complete">
+<li class="list-group-item d-flex gap-4 cursor-pointer" [ngClass]="todo.complete ? 'my-custom' : ''">
+  <input class="form-check-input" type="checkbox" [(ngModel)]="todo.complete">
   <span>{{todo.id}}</span>
-  <span [ngClass]="todo.complete ? 'text-decoration-line-through' : ''">{{todo.label}}</span>
+  <span [ngClass]="todo.complete ? 'text-decoration-line-through' : ''" class="flex-1">{{todo.label}}</span>
+  <button type="button" class="btn-close btn-danger" aria-label="Close" (click)="removeItem(todo.id)"></button>
 </li>
-

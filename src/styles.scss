@@ -1,17 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 $spacer: 1rem;
 $primary: #4538ff;
-// $spacers: (
-//     0: 0,
-//     1: $spacer * .25,
-//     2: $spacer * .5,
-//     3: $spacer * .75,
-//     4: $spacer,
-//     5: $spacer * 1.25,
-//     6: $spacer * 1.5,
-//     7: $spacer * 1.75,
-//     8: $spacer * 2,
-//     9: $spacer * 3,
-//     );
+$btn-close-color: red;
+
 $font-family-base: "Poppins";
-    @import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+  .flex-1 {
+      flex: 1;
+  }
+.cursor-pointer{
+    cursor: pointer;
+}

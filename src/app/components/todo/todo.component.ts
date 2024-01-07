@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from '@angular/common';
 
@@ -11,4 +11,9 @@ import { CommonModule } from '@angular/common';
 })
 export class TodoComponent {
   @Input() todo = { id: 1, label: "", complete : false}
+  @Output() remove = new EventEmitter<{ id: number }>()
+
+  removeItem(todoId: number) {
+    this.remove.emit({ id: todoId })    
+  }
 }

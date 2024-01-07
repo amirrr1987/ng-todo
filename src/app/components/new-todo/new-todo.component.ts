@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormsModule } from "@angular/forms";
 
 @Component({
   selector: 'app-new-todo',
@@ -10,8 +10,11 @@ import {FormsModule} from "@angular/forms";
 })
 export class NewTodoComponent {
   tempTodo: string = ""
-  sendTodo($event:any){
-    console.log()
-this.tempTodo = ""
+  @Output() updateTodo = new EventEmitter<{label: string}>();
+  sendTodo() {
+    if (this.tempTodo.length > 0) {
+      this.updateTodo.emit({label: this.tempTodo})
+      this.tempTodo = ""
+    }
   }
 }
