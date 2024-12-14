@@ -4,10 +4,10 @@ import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { ResponseService } from './response/response.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    TasksModule,
     // TypeOrmModule.forRoot({
     //   type: 'sqlite',
     //   database: 'database.sqlite',
@@ -24,6 +24,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    TasksModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, ResponseService],

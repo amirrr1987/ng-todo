@@ -13,10 +13,15 @@ const baseSchema = z.object({
   status: z.string(),
   deactivate: z.boolean(),
 });
+
+export type JustTheName = z.infer<typeof TaskDto.Create.Request.Body.Schema>;
+
 export const TaskDto = {
   Create: {
     Request: {
-      Body: baseSchema.pick({ title: true, description: true }),
+      Body: {
+        Schema: baseSchema.pick({ title: true, description: true }),
+      },
     },
     Response: baseSchema.shape.id,
   },
@@ -49,6 +54,7 @@ export const TaskDto = {
     Response: baseSchema.shape.id,
   },
 };
+
 const getData = async () => {
   const x = await TaskDto.update.Request.Body.spa({ id: '1' });
   console.log(x.error);
