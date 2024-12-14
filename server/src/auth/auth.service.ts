@@ -3,30 +3,15 @@ import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { AuthRepository } from './auth.repository';
 import * as bcrypt from 'bcrypt';
-import { omit, pick } from 'lodash';
+import { omit } from 'lodash';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly authRepository: AuthRepository) {}
-  // async create(createAuthDto: CreateAuthDto) {
-  //   return await this.authRepository.createUser(createAuthDto);
-  // }
-
-  // findAll() {
-  //   return `This action returns all auth`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} auth`;
-  // }
-
-  // update(id: number, updateAuthDto: UpdateAuthDto) {
-  //   return `This action updates a #${id} auth`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} auth`;
-  // }
+  constructor(
+    private readonly authRepository: AuthRepository,
+    private readonly jwtService: JwtService,
+  ) {}
   async signup(dto: CreateAuthDto) {
     return await this.authRepository.createUser(dto);
   }
@@ -40,6 +25,8 @@ export class AuthService {
     if (!compared) {
       throw new UnauthorizedException('Please check your login credentials');
     }
-    return omit(user, ['password']);
+    const payload = { ...user };
+    const accessToken = await this.jwtService.sign(payload);
+    return { ...omit(user, ['password']), accessToken };
   }
 }

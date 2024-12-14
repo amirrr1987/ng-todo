@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { Auth as AuthEntity } from './auth/entities/auth.entity';
 import { Task as TaskEntity } from './tasks/entities/task.entity';
 import { User as UserEntity } from './users/entities/user.entity';
+
 @Module({
   imports: [
     // TypeOrmModule.forRoot({
@@ -17,6 +18,7 @@ import { User as UserEntity } from './users/entities/user.entity';
     //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
     //   synchronize: true,
     // }),
+
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
