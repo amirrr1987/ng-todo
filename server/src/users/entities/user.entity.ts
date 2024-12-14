@@ -1,14 +1,14 @@
-import { Auth as AuthEntity } from '../../auth/entities/auth.entity';
-import { Task as TaskEntity } from '../../tasks/entities/task.entity';
+// import { Auth as AuthEntity } from '../../auth/entities/auth.entity';
+// import { Task as TaskEntity } from '../../tasks/entities/task.entity';
 import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
+  // JoinColumn,
+  // JoinTable,
+  // ManyToMany,
+  // OneToOne,
 } from 'typeorm';
 
 @Entity({ name: 'users' })
@@ -22,24 +22,24 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 255 })
   lastName: string;
 
-  @OneToOne(() => AuthEntity, (auth) => auth.id, { cascade: true, eager: true })
-  @JoinColumn({ name: 'authId' })
-  auth: AuthEntity;
+  // @OneToOne(() => AuthEntity, (auth) => auth.id, { cascade: true, eager: true })
+  // @JoinColumn({ name: 'authId' })
+  // auth: AuthEntity;
 
-  @Column({ name: 'authId' })
-  authId: string;
+  // @Column({ name: 'authId' })
+  // authId: string;
 
-  @ManyToMany(() => TaskEntity, { cascade: true, eager: true })
-  @JoinTable({
-    name: 'users_tasks', // Renamed table for better context
-    joinColumn: {
-      name: 'user_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'task_id',
-      referencedColumnName: 'id',
-    },
-  })
-  tasks: TaskEntity[];
+  // @ManyToMany(() => TaskEntity, { cascade: true, eager: true })
+  // @JoinTable({
+  //   name: 'users_tasks',
+  //   joinColumn: {
+  //     name: 'user_id',
+  //     referencedColumnName: 'id',
+  //   },
+  //   inverseJoinColumn: {
+  //     name: 'task_id',
+  //     referencedColumnName: 'id',
+  //   },
+  // })
+  // tasks: TaskEntity[];
 }

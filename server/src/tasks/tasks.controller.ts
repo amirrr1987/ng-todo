@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import {
@@ -17,6 +18,7 @@ import {
   GetOneTaskParamDto,
 } from './dto';
 import { ResponseService } from '../response/response.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('tasks')
 export class TasksController {
@@ -32,6 +34,7 @@ export class TasksController {
   }
 
   @Get()
+  @UseGuards(AuthGuard())
   async findAll(@Query() query: GetByFilterTaskQueryDto) {
     const tasks = await this.tasksService.findAll(query);
     return this.responseService.findAll(tasks);
