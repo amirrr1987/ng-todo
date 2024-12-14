@@ -16,7 +16,7 @@ import {
   DeleteTaskParamDto,
   GetOneTaskParamDto,
 } from './dto';
-import { ResponseService } from 'src/response/response.service';
+import { ResponseService } from '../response/response.service';
 
 @Controller('tasks')
 export class TasksController {

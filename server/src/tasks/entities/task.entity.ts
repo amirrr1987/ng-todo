@@ -12,7 +12,7 @@ export class Task extends BaseEntity {
   @Column({ type: 'varchar', length: 255, nullable: true })
   description: string;
 
-  @Column({ enum: TaskStatus, default: TaskStatus.TODO })
+  @Column({ type: 'enum', enum: TaskStatus, default: TaskStatus.TODO })
   status: TaskStatus;
 
   @Column({ type: 'boolean', default: false })
@@ -21,7 +21,6 @@ export class Task extends BaseEntity {
   @Column({
     type: 'timestamp',
     readonly: true,
-    update: false,
     default: () => 'CURRENT_TIMESTAMP',
   })
   createdAt: Date;

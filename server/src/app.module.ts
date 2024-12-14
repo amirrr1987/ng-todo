@@ -6,7 +6,9 @@ import { ResponseService } from './response/response.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-
+import { Auth as AuthEntity } from './auth/entities/auth.entity';
+import { Task as TaskEntity } from './tasks/entities/task.entity';
+import { User as UserEntity } from './users/entities/user.entity';
 @Module({
   imports: [
     // TypeOrmModule.forRoot({
@@ -22,8 +24,9 @@ import { UsersModule } from './users/users.module';
       username: 'postgres',
       password: '0251',
       database: 'task-management',
-      autoLoadEntities: true,
+      // autoLoadEntities: true,
       synchronize: true,
+      entities: [UserEntity, AuthEntity, TaskEntity],
     }),
     TasksModule,
     AuthModule,

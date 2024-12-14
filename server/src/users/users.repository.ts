@@ -12,12 +12,12 @@ export class UsersRepository extends Repository<UserEntity> {
   constructor(protected readonly dataSource: DataSource) {
     super(UserEntity, dataSource.createEntityManager());
   }
-
   async createUser(dto: CreateUserDto): Promise<void> {
     try {
       const user = this.create(dto);
       await user.save();
     } catch (error) {
+      console.log('🚀 ~ UsersRepository ~ createUser ~ error:', error);
       throw new InternalServerErrorException();
     }
   }

@@ -1,8 +1,8 @@
 import { IsString, IsUUID } from 'class-validator';
 
 export class CreateUserDto {
-  @IsUUID()
-  id: string;
+  // @IsUUID()
+  // id: string;
 
   @IsString()
   firstName: string;
@@ -10,6 +10,6 @@ export class CreateUserDto {
   @IsString()
   lastName: string;
 
-  @IsUUID()
-  authId: string;
+  // @IsUUID()
+  // authId: string;
 }
