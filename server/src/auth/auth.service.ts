@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { AuthRepository } from './auth.repository';
+import * as bcrypt from 'bcrypt';
+import { omit, pick } from 'lodash';
 
 @Injectable()
 export class AuthService {
@@ -29,6 +31,15 @@ export class AuthService {
     return await this.authRepository.createUser(dto);
   }
   async signin(dto: UpdateAuthDto) {
-    return await this.authRepository.findOneBy({ ...dto });
+    const { username, password } = dto;
+    const user = await this.authRepository.findOneBy({ username });
+    if (!user) {
+      throw new UnauthorizedException('Please check your login credentials');
+    }
+    const compared = await bcrypt.compare(password, user.password);
+    if (!compared) {
+      throw new UnauthorizedException('Please check your login credentials');
+    }
+    return omit(user, ['password']);
   }
 }

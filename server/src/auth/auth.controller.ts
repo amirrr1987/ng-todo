@@ -47,7 +47,7 @@ export class AuthController {
   }
 
   @Post('/signin')
-  async signin(@Body() dto: UpdateAuthDto): Promise<Auth> {
+  async signin(@Body() dto: UpdateAuthDto): Promise<Partial<Auth>> {
     return await this.authService.signin(dto);
   }
 }

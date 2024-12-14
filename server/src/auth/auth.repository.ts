@@ -7,6 +7,7 @@ import { CreateAuthDto } from './dto/create-auth.dto';
 import { DataSource, Repository } from 'typeorm';
 import { Auth as AuthEntity } from './entities/auth.entity';
 import * as bcrypt from 'bcrypt';
+
 @Injectable()
 export class AuthRepository extends Repository<AuthEntity> {
   constructor(protected readonly dataSource: DataSource) {
