@@ -10,7 +10,15 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  // const regex = /\d+/;
+  // const str = '123abc';
+
+  // console.log('');
+  // console.log(str.matchAll(regex));
+  // console.log('');
+
   app.setGlobalPrefix('api');
   await app.listen(3000);
 }
+
 bootstrap();

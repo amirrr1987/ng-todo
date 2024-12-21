@@ -21,7 +21,6 @@ export class TasksRepository extends Repository<TaskEntity> {
     if (deactivate) {
       query.andWhere(`task.deactivate = :deactivate`, { deactivate });
     }
-    console.log(search);
 
     if (search) {
       query.andWhere(

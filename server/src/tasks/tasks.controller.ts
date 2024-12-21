@@ -28,6 +28,7 @@ export class TasksController {
   ) {}
 
   @Post()
+  @UseGuards(AuthGuard())
   async create(@Body() dto: CreateTaskRequestDto) {
     const id = await this.tasksService.create(dto);
     return this.responseService.create(id);
@@ -41,18 +42,21 @@ export class TasksController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard())
   async findOne(@Param() param: GetOneTaskParamDto) {
     const task = await this.tasksService.findOne(param.id);
     return this.responseService.findOne(task);
   }
 
   @Patch()
+  @UseGuards(AuthGuard())
   async update(@Body() dto: UpdateTaskBodyDto) {
     const task = await this.tasksService.update(dto);
     return this.responseService.update(task);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard())
   async remove(@Param() param: DeleteTaskParamDto) {
     const taskId = await this.tasksService.remove(param.id);
     return this.responseService.remove(taskId);

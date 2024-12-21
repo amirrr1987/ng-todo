@@ -22,8 +22,8 @@ import { User as UserEntity } from './users/entities/user.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5433,
-      username: 'postgres',
+      port: 5434,
+      username: 'amir',
       password: '0251',
       database: 'task-management',
       // autoLoadEntities: true,
