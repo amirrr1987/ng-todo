@@ -5,9 +5,11 @@ import { AuthRepository } from './auth.repository';
 import * as bcrypt from 'bcrypt';
 import { omit } from 'lodash';
 import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from './common/jwt-payload.interface';
+import { IAuthService } from './interfaces/auth.service.interface';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
   constructor(
     private readonly authRepository: AuthRepository,
     private readonly jwtService: JwtService,
@@ -25,7 +27,7 @@ export class AuthService {
     if (!compared) {
       throw new UnauthorizedException('Please check your login credentials');
     }
-    const payload = { ...user };
+    const payload: JwtPayload = { ...user };
     const accessToken = await this.jwtService.sign(payload);
     return { ...omit(user, ['password']), accessToken };
   }
