@@ -3,18 +3,18 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { DataSource, Repository } from 'typeorm';
-import { Auth as AuthEntity } from './entities/user.entity';
+import { User as UserEntity } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
-export class AuthRepository extends Repository<AuthEntity> {
+export class UserRepository extends Repository<UserEntity> {
   constructor(protected readonly dataSource: DataSource) {
-    super(AuthEntity, dataSource.createEntityManager());
+    super(UserEntity, dataSource.createEntityManager());
   }
 
-  async createAuth(dto: CreateAuthDto): Promise<AuthEntity['id']> {
+  async createAuth(dto: CreateUserDto): Promise<UserEntity['id']> {
     const { password, username } = dto;
     try {
       const salt = await bcrypt.genSalt();
