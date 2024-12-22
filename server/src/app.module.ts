@@ -6,7 +6,7 @@ import { ResponseService } from './response/response.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './user/user.module';
 import { UsersModule } from './profiles/profiles.module';
-import { Auth as AuthEntity } from './user/entities/user.entity';
+import { User as UserEntity } from './user/entities/user.entity';
 import { Task as TaskEntity } from './tasks/entities/task.entity';
 import { Profile as ProfileEntity } from './profiles/entities/profile.entity';
 
@@ -29,7 +29,7 @@ import { Profile as ProfileEntity } from './profiles/entities/profile.entity';
       autoLoadEntities: true,
       synchronize: true,
       logging: true,
-      entities: [ProfileEntity, AuthEntity, TaskEntity],
+      entities: [ProfileEntity, UserEntity, TaskEntity],
     }),
     TasksModule,
     AuthModule,
