@@ -1,5 +1,12 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { TaskStatus } from '../dto/base-task.dto';
+import { Profile as ProfileEntity } from '../../profiles/entities/profile.entity';
 
 @Entity({ name: 'tasks' })
 export class Task extends BaseEntity {
@@ -34,4 +41,10 @@ export class Task extends BaseEntity {
 
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
+
+  @ManyToMany((_type) => ProfileEntity, (profile) => profile.id, {
+    cascade: true,
+    eager: true,
+  })
+  Profiles: ProfileEntity[];
 }
