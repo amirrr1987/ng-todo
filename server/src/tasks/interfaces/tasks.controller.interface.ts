@@ -5,8 +5,8 @@ import {
   GetOneTaskParamDto,
   UpdateTaskBodyDto,
 } from '../dto';
-import { User as UserEntity } from '../../users/entities/user.entity';
 import { BaseResponse } from '../dto/base-task.dto';
+import { User as UserEntity } from '../../users/entities/user.entity';
 
 export interface ITasksController {
   create(dto: CreateTaskRequestDto, user: UserEntity): Promise<BaseResponse>;

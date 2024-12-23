@@ -19,15 +19,17 @@ import {
 } from './dto';
 import { ResponseService } from '../response/response.service';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/users/common/get-user.decorator';
-import { User } from 'src/users/entities/user.entity';
+import { GetUser } from '../users/common/get-user.decorator';
+import { User as UserEntity } from '../users/entities/user.entity';
 import { ITasksController } from './interfaces/tasks.controller.interface';
 import { BaseResponse } from './dto/base-task.dto';
+import { ProfilesService } from 'src/profiles/profiles.service';
 
 @Controller('tasks')
 export class TasksController implements ITasksController {
   constructor(
     private readonly tasksService: TasksService,
+    private readonly profilesService: ProfilesService,
     private readonly responseService: ResponseService,
   ) {}
 
@@ -35,9 +37,13 @@ export class TasksController implements ITasksController {
   @UseGuards(AuthGuard())
   async create(
     @Body() dto: CreateTaskRequestDto,
-    @GetUser() user: User,
+    @GetUser() user: UserEntity,
   ): Promise<BaseResponse> {
-    console.log('🚀 ~ TasksController ~ create ~ user:', user);
+    const profile = await this.profilesService.findByKeyValue(
+      'userId',
+      user.id,
+    );
+    console.log('🚀 ~ TasksController ~ profile:', profile);
     const id = await this.tasksService.create(dto);
     return this.responseService.create(id);
   }

@@ -1,14 +1,9 @@
-import {
-  Profile,
-  Profile as ProfileEntity,
-} from 'src/profiles/entities/profile.entity';
+import { Profile as ProfileEntity } from 'src/profiles/entities/profile.entity';
 import {
   AfterInsert,
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 

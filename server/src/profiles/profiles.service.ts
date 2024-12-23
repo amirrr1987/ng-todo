@@ -17,6 +17,9 @@ export class ProfilesService {
   async findOne(id: string) {
     return await this.profilesRepository.findOneBy({ id });
   }
+  async findByKeyValue(key: string, value: any) {
+    return await this.profilesRepository.findOneBy({ [key]: value });
+  }
 
   update(dto: UpdateProfileDto) {
     return `This action updates a #${dto} user`;
