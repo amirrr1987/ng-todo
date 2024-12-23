@@ -7,4 +7,4 @@ import { ProfilesRepository } from './profiles.repository';
   controllers: [ProfilesController],
   providers: [ProfilesService, ProfilesRepository],
 })
-export class UsersModule {}
+export class ProfilesModule {}

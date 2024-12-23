@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { TasksModule } from './tasks/tasks.module';
 import { ResponseService } from './response/response.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './users/user.module';
-import { UsersModule } from './profiles/profiles.module';
+import { UsersModule } from './users/user.module';
+import { ProfilesModule } from './profiles/profiles.module';
 import { User as UserEntity } from './users/entities/user.entity';
 import { Task as TaskEntity } from './tasks/entities/task.entity';
 import { Profile as ProfileEntity } from './profiles/entities/profile.entity';
@@ -25,7 +25,7 @@ import { Profile as ProfileEntity } from './profiles/entities/profile.entity';
       entities: [ProfileEntity, UserEntity, TaskEntity],
     }),
     TasksModule,
-    AuthModule,
+    ProfilesModule,
     UsersModule,
   ],
   controllers: [AppController],

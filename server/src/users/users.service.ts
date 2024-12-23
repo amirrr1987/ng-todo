@@ -16,7 +16,7 @@ import { ProfilesService } from '../profiles/profiles.service';
 import { CreateProfileDto } from '../profiles/dto/create-profile.dto';
 
 @Injectable()
-export class AuthService implements IUserService {
+export class UsersService implements IUserService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly profilesService: ProfilesService,
@@ -29,12 +29,12 @@ export class AuthService implements IUserService {
     if (existingUser) {
       throw new ConflictException('Username already exists');
     }
-    const authId = await this.userRepository.createAuth(dto);
-    console.log('🚀 ~ AuthService ~ signup ~ authId:', authId);
+    const userId = await this.userRepository.createUser(dto);
+    console.log('🚀 ~ UsersService ~ signup ~ userId:', userId);
     const x = await this.profilesService.create({
       firstName: 'Test',
       lastName: 'Test',
-      authId: authId,
+      userId: userId,
     } as CreateProfileDto);
     return x;
   }
@@ -42,16 +42,16 @@ export class AuthService implements IUserService {
     dto: UpdateUserDto,
   ): Promise<Omit<UserEntity, 'password'> & { accessToken: string }> {
     const { username, password } = dto;
-    const auth = await this.userRepository.findOneBy({ username });
-    if (!auth) {
+    const user = await this.userRepository.findOneBy({ username });
+    if (!user) {
       throw new UnauthorizedException('Please check your login credentials');
     }
-    const compared = await bcrypt.compare(password, auth.password);
+    const compared = await bcrypt.compare(password, user.password);
     if (!compared) {
       throw new UnauthorizedException('Please check your login credentials');
     }
-    const payload: JwtPayload = { ...auth };
+    const payload: JwtPayload = { ...user };
     const accessToken = await this.jwtService.sign(payload);
-    return { ...omit(auth, ['password']), accessToken };
+    return { ...omit(user, ['password']), accessToken };
   }
 }
