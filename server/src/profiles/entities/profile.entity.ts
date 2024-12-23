@@ -6,6 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { User as UserEntity } from '../../users/entities/user.entity';
 
 @Entity({ name: 'profiles' })
 export class Profile extends BaseEntity {
@@ -34,4 +35,11 @@ export class Profile extends BaseEntity {
 
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
+
+  @Column()
+  userId: number;
+
+  @OneToOne(() => UserEntity, (user) => user.id)
+  @JoinColumn({ name: 'userId' })
+  user: UserEntity;
 }

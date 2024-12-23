@@ -1,4 +1,4 @@
-import { Profile as ProfileEntity } from '../../profiles/entities/profile.entity';
+import { Profile as ProfileEntity } from 'src/profiles/entities/profile.entity';
 import {
   BaseEntity,
   Column,
@@ -35,8 +35,4 @@ export class User extends BaseEntity {
 
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
-
-  @OneToOne(() => ProfileEntity, (user) => user.id, { cascade: true })
-  @JoinColumn()
-  user: ProfileEntity;
 }
