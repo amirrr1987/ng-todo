@@ -11,5 +11,5 @@ export class CreateProfileDto {
   lastName: string;
 
   @IsUUID()
-  userId: string;
+  user: string;
 }

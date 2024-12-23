@@ -12,7 +12,9 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './common/jwt-payload.interface';
 import { IUserService } from './interfaces/users.service.interface';
 import { User as UserEntity } from './entities/user.entity';
-import { ProfilesService } from '../profiles/profiles.service';
+import { ProfilesRepository } from 'src/profiles/profiles.repository';
+import { ProfilesService } from 'src/profiles/profiles.service';
+import { CreateProfileDto } from 'src/profiles/dto/create-profile.dto';
 
 @Injectable()
 export class UsersService implements IUserService {

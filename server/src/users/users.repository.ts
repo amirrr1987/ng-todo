@@ -14,7 +14,7 @@ export class UserRepository extends Repository<UserEntity> {
     super(UserEntity, dataSource.createEntityManager());
   }
 
-  async createUser(dto: CreateUserDto): Promise<string> {
+  async createUser(dto: CreateUserDto): Promise<UserEntity['id']> {
     const { password, username } = dto;
     try {
       const salt = await bcrypt.genSalt();
