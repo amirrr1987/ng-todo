@@ -10,15 +10,13 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
-  // const regex = /\d+/;
-  // const str = '123abc';
-
-  // console.log('');
-  // console.log(str.matchAll(regex));
-  // console.log('');
+  app.enableCors({
+    allowedHeaders: '*',
+    origin: '*',
+  });
 
   app.setGlobalPrefix('api');
-  await app.listen(3000);
+  await app.listen(5000);
 }
 
 bootstrap();

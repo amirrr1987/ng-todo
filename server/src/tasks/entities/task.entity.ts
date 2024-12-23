@@ -2,6 +2,7 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -42,9 +43,6 @@ export class Task extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  @ManyToMany((_type) => ProfileEntity, (profile) => profile.id, {
-    cascade: true,
-    eager: true,
-  })
-  Profiles: ProfileEntity[];
+  @ManyToMany(() => ProfileEntity, (profile) => profile.id)
+  profiles: ProfileEntity[];
 }

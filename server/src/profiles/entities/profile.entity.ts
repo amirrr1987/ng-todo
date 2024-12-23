@@ -2,11 +2,11 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
-  OneToOne,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User, User as UserEntity } from '../../users/entities/user.entity';
+import { Task as TaskEntity } from 'src/tasks/entities/task.entity';
 
 @Entity({ name: 'profiles' })
 export class Profile extends BaseEntity {
@@ -38,4 +38,18 @@ export class Profile extends BaseEntity {
 
   @Column({ default: '' })
   userId: string;
+
+  @ManyToMany(() => TaskEntity, { onDelete: 'CASCADE', eager: true })
+  @JoinTable({
+    name: 'profiles_tasks',
+    joinColumn: {
+      name: 'profileId',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'taskId',
+      referencedColumnName: 'id',
+    },
+  })
+  tasks: TaskEntity[];
 }

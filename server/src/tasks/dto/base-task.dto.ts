@@ -31,9 +31,9 @@ export class BaseTaskDto {
   @IsOptional()
   deactivate: boolean;
 }
-
-export class BaseResponse {
+export class BaseResponse<T = any> {
   success: boolean;
   status: HttpStatus;
   message: string;
+  data?: T;
 }

@@ -5,8 +5,6 @@ import {
   AllTaskResponseDto,
   CreateTaskRequestDto,
   CreateTaskResponseDto,
-  GetByFilterTaskQueryDto,
-  GetByFilterTaskResponseDto,
   GetOneTaskResponseDto,
   UpdateTaskBodyDto,
   UpdateTaskResponseDto,
@@ -15,9 +13,10 @@ import {
   GetOneTaskParamDto,
 } from './dto';
 import { TasksRepository } from './tasks.repository';
+import { ITasksService } from './interfaces/tasks.service.interface';
 
 @Injectable()
-export class TasksService {
+export class TasksService implements ITasksService {
   constructor(private readonly tasksRepository: TasksRepository) {}
 
   async create(dto: CreateTaskRequestDto): Promise<CreateTaskResponseDto> {

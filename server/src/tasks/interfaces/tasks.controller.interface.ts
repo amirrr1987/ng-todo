@@ -1,10 +1,17 @@
 import { CreateTaskRequestDto } from '../dto/create-task.dto';
-import { UpdateTaskBodyDto } from '../dto/update-task.dto';
-import { Task as TaskEntity } from '../entities/task.entity';
+import {
+  DeleteTaskParamDto,
+  GetByFilterTaskQueryDto,
+  GetOneTaskParamDto,
+  UpdateTaskBodyDto,
+} from '../dto';
+import { User as UserEntity } from '../../users/entities/user.entity';
+import { BaseResponse } from '../dto/base-task.dto';
 
-export interface IAuthController {
-  signup(dto: CreateTaskRequestDto): Promise<void>;
-  signin(
-    dto: UpdateTaskBodyDto,
-  ): Promise<Omit<TaskEntity, 'password'> & { accessToken: string }>;
+export interface ITasksController {
+  create(dto: CreateTaskRequestDto, user: UserEntity): Promise<BaseResponse>;
+  findAll(query: GetByFilterTaskQueryDto): Promise<BaseResponse>;
+  findOne(dto: GetOneTaskParamDto): Promise<BaseResponse>;
+  update(dto: UpdateTaskBodyDto): Promise<BaseResponse>;
+  remove(dto: DeleteTaskParamDto): Promise<BaseResponse>;
 }
