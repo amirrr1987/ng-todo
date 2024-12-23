@@ -8,11 +8,10 @@ export class ProfilesRepository extends Repository<ProfileEntity> {
   constructor(protected readonly dataSource: DataSource) {
     super(ProfileEntity, dataSource.createEntityManager());
   }
-  async createProfile(dto: CreateProfileDto): Promise<any> {
+  async createProfile(dto: CreateProfileDto): Promise<void> {
     try {
       const profile = this.create(dto);
-      const savedProfile = await profile.save();
-      return savedProfile;
+      await profile.save();
     } catch (error) {
       console.log('🚀 ~ ProfilesRepository ~ createProfile ~ error:', error);
       throw new InternalServerErrorException();

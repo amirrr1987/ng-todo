@@ -6,17 +6,17 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User as UserEntity } from '../../users/entities/user.entity';
+import { User, User as UserEntity } from '../../users/entities/user.entity';
 
 @Entity({ name: 'profiles' })
 export class Profile extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, default: '' })
   firstName: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 255, default: '' })
   lastName: string;
 
   @Column({
@@ -36,10 +36,6 @@ export class Profile extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  // @Column({ type: 'uuid' })
-  // userId: string;
-
-  @OneToOne(() => UserEntity, (user) => user.profile, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'userId' })
-  user: UserEntity;
+  @Column({ default: '' })
+  userId: string;
 }

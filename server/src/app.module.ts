@@ -19,7 +19,7 @@ import { Profile as ProfileEntity } from './profiles/entities/profile.entity';
       username: 'amir',
       password: '0251',
       database: 'task-management',
-      autoLoadEntities: true,
+      // autoLoadEntities: true,
       synchronize: true,
       logging: true,
       entities: [ProfileEntity, UserEntity, TaskEntity],

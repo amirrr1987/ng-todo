@@ -1,4 +1,7 @@
-import { Profile as ProfileEntity } from 'src/profiles/entities/profile.entity';
+import {
+  Profile,
+  Profile as ProfileEntity,
+} from 'src/profiles/entities/profile.entity';
 import {
   AfterInsert,
   BaseEntity,
@@ -37,16 +40,10 @@ export class User extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  @OneToOne(() => ProfileEntity, (profile) => profile.user, { cascade: true })
-  @JoinColumn()
-  profile: ProfileEntity; // اینجا profile به صورت خودکار به `User` متصل می‌شود
-
-  // @AfterInsert()
-  // async createProfile() {
-  //   const profile = new Profile();
-  //   profile.userId = this.id; // اینجا user.id را به Profile اختصاص می‌دهیم
-  //   profile.firstName = ''; // مقدار پیش‌فرض برای firstName
-  //   profile.lastName = ''; // مقدار پیش‌فرض برای lastName
-  //   await profile.save(); // ذخیره Profile جدید
-  // }
+  @AfterInsert()
+  async createProfile() {
+    const profile = new ProfileEntity();
+    profile.userId = this.id;
+    await profile.save();
+  }
 }
