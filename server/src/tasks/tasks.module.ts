@@ -6,8 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Task } from './entities/task.entity';
 import { TasksRepository } from './tasks.repository';
 import { UsersModule } from '../users/user.module';
-import { ProfilesService } from '../profiles/profiles.service';
-import { ProfilesRepository } from '../profiles/profiles.repository';
+import { UserRepository } from 'src/users/users.repository';
+import { UsersService } from 'src/users/users.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Task]), UsersModule],
@@ -16,8 +16,8 @@ import { ProfilesRepository } from '../profiles/profiles.repository';
     TasksService,
     ResponseService,
     TasksRepository,
-    ProfilesService,
-    ProfilesRepository,
+    UsersService,
+    UserRepository,
   ],
 })
 export class TasksModule {}

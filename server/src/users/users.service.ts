@@ -12,15 +12,11 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './common/jwt-payload.interface';
 import { IUserService } from './interfaces/users.service.interface';
 import { User as UserEntity } from './entities/user.entity';
-import { ProfilesRepository } from 'src/profiles/profiles.repository';
-import { ProfilesService } from 'src/profiles/profiles.service';
-import { CreateProfileDto } from 'src/profiles/dto/create-profile.dto';
 
 @Injectable()
 export class UsersService implements IUserService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly profilesService: ProfilesService,
     private readonly jwtService: JwtService,
   ) {}
   async signup(dto: CreateUserDto): Promise<void> {
@@ -48,4 +44,6 @@ export class UsersService implements IUserService {
     const accessToken = await this.jwtService.sign(payload);
     return { ...omit(auth, ['password']), accessToken };
   }
+
+  
 }

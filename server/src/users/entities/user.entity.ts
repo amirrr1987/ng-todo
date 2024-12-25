@@ -1,12 +1,11 @@
-import { Profile as ProfileEntity } from 'src/profiles/entities/profile.entity';
 import {
-  AfterInsert,
   BaseEntity,
   Column,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-
+import { Task as TasksEntity } from '../../tasks/entities/task.entity';
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -35,10 +34,6 @@ export class User extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  @AfterInsert()
-  async createProfile() {
-    const profile = new ProfileEntity();
-    profile.userId = this.id;
-    await profile.save();
-  }
+  @ManyToOne(() => TasksEntity, (task) => task.user, { eager: false })
+  tasks: TasksEntity;
 }

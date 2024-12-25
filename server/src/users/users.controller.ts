@@ -5,7 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User as UserEntity } from './entities/user.entity';
 import { IUserController } from './interfaces/users.controller.interface';
 
-@Controller('users')
+@Controller('auth')
 export class UsersController implements IUserController {
   constructor(private readonly usersService: UsersService) {}
 

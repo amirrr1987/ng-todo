@@ -3,10 +3,11 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TaskStatus } from '../dto/base-task.dto';
-import { Profile as ProfileEntity } from '../../profiles/entities/profile.entity';
+import { User as UserEntity } from '../../users/entities/user.entity';
 
 @Entity({ name: 'tasks' })
 export class Task extends BaseEntity {
@@ -42,6 +43,6 @@ export class Task extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  @ManyToOne(() => ProfileEntity, (profile) => profile.tasks, { eager: false })
-  profile: ProfileEntity;
+  @OneToMany(() => UserEntity, (user) => user.tasks, { eager: false })
+  user: UserEntity;
 }
