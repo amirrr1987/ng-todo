@@ -1,47 +1,32 @@
-import {
-  ConflictException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserRepository } from './users.repository';
-import * as bcrypt from 'bcrypt';
-import { omit } from 'lodash';
-import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from './common/jwt-payload.interface';
+import { Inject, Injectable } from '@nestjs/common';
 import { IUserService } from './interfaces/users.service.interface';
+import { CreateUserDto, UpdateUserDto, RemoveUserDto } from './dto';
+import { UserRepository } from './users.repository';
 import { User as UserEntity } from './entities/user.entity';
-
 @Injectable()
 export class UsersService implements IUserService {
   constructor(
+    @Inject(UserRepository)
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService,
   ) {}
-  async signup(dto: CreateUserDto): Promise<void> {
-    const existingUser = await this.userRepository.findOneBy({
-      username: dto.username,
-    });
-    if (existingUser) {
-      throw new ConflictException('Username already exists');
-    }
-    await this.userRepository.createUser(dto);
+
+  async create(dto: CreateUserDto): Promise<UserEntity['id']> {
+    return await this.userRepository.createUser(dto);
   }
-  async signin(
-    dto: UpdateUserDto,
-  ): Promise<Omit<UserEntity, 'password'> & { accessToken: string }> {
-    const { username, password } = dto;
-    const auth = await this.userRepository.findOneBy({ username });
-    if (!auth) {
-      throw new UnauthorizedException('Please check your login credentials');
-    }
-    const compared = await bcrypt.compare(password, auth.password);
-    if (!compared) {
-      throw new UnauthorizedException('Please check your login credentials');
-    }
-    const payload: JwtPayload = { ...auth };
-    const accessToken = await this.jwtService.sign(payload);
-    return { ...omit(auth, ['password']), accessToken };
+  async findAll(): Promise<UserEntity[]> {
+    return await this.userRepository.find();
+  }
+  async findByKeyValue(key: string, value: any): Promise<UserEntity> {
+    const condition = { [key]: value };
+    return await this.userRepository.findOneBy(condition);
+  }
+  async update(dto: UpdateUserDto): Promise<UserEntity['id']> {
+    await this.userRepository.update(dto.id, dto);
+    return dto.id;
+  }
+
+  async remove(dto: RemoveUserDto['id']): Promise<UserEntity['id']> {
+    await this.userRepository.delete(dto);
+    return dto;
   }
 }

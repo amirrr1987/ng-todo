@@ -3,9 +3,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from '@/tasks/tasks.module';
-import { UsersModule } from '@/users/user.module';
+import { UsersModule } from '@/users/users.module';
 import { User as UserEntity } from '@/users/entities/user.entity';
 import { Task as TaskEntity } from '@/tasks/entities/task.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { Task as TaskEntity } from '@/tasks/entities/task.entity';
     }),
     UsersModule,
     TasksModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { User as UserEntity } from '../entities/user.entity';
+import { User as UserEntity } from '@/users/entities/user.entity';
 
 export const GetUser = createParamDecorator(
   (_data, ctx: ExecutionContext): UserEntity => {

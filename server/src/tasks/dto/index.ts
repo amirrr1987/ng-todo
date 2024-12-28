@@ -55,8 +55,8 @@ export const TaskDto = {
   },
 };
 
-const getData = async () => {
-  const x = await TaskDto.update.Request.Body.spa({ id: '1' });
-  console.log(x.error);
-};
-getData();
+// const getData = async () => {
+//   const x = await TaskDto.update.Request.Body.spa({ id: '1' });
+//   console.log(x.error);
+// };
+// getData();

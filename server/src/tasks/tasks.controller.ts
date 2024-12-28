@@ -29,14 +29,14 @@ export class TasksController implements ITasksController {
   ) {}
 
   @Post()
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   async create(@Body() dto: CreateTaskRequestDto): Promise<BaseResponse> {
     const id = await this.tasksService.create(dto);
     return this.responseService.create(id);
   }
 
   @Get()
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   async findAll(
     @Query() query: GetByFilterTaskQueryDto,
   ): Promise<BaseResponse> {
@@ -45,21 +45,21 @@ export class TasksController implements ITasksController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   async findOne(param: GetOneTaskParamDto): Promise<BaseResponse> {
     const task = await this.tasksService.findOne(param.id);
     return this.responseService.findOne(task);
   }
 
   @Patch()
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   async update(dto: UpdateTaskBodyDto): Promise<BaseResponse> {
     const task = await this.tasksService.update(dto);
     return this.responseService.update(task);
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   async remove(param: DeleteTaskParamDto): Promise<BaseResponse> {
     const taskId = await this.tasksService.remove(param.id);
     return this.responseService.remove(taskId);

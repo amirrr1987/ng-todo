@@ -1,10 +1,15 @@
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
-import { User as UserEntity } from '../entities/user.entity';
-
+import {
+  CreateUserDto,
+  FindAllUserDto,
+  FindByKeyValueUserDto,
+  RemoveUserDto,
+  UpdateUserDto,
+} from '@/users/dto';
+import { User as UserEntity } from '@/users/entities/user.entity';
 export interface IUserService {
-  signup(dto: CreateUserDto): Promise<void>;
-  signin(
-    dto: UpdateUserDto,
-  ): Promise<Omit<UserEntity, 'password'> & { accessToken: string }>;
+  create(dto: CreateUserDto): Promise<UserEntity['id']>;
+  findAll(dto: FindAllUserDto): Promise<UserEntity[]>;
+  findByKeyValue(key: string, dto: FindByKeyValueUserDto): Promise<UserEntity>;
+  update(dto: UpdateUserDto): Promise<UserEntity['id']>;
+  remove(dto: RemoveUserDto['id']): Promise<RemoveUserDto['id']>;
 }
