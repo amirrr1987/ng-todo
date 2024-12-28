@@ -1,13 +1,11 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TasksModule } from './tasks/tasks.module';
-import { ResponseService } from './response/response.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from './users/user.module';
-import { User as UserEntity } from './users/entities/user.entity';
-import { Task as TaskEntity } from './tasks/entities/task.entity';
-import { UserRepository } from './users/users.repository';
+import { TasksModule } from '@/tasks/tasks.module';
+import { UsersModule } from '@/users/user.module';
+import { User as UserEntity } from '@/users/entities/user.entity';
+import { Task as TaskEntity } from '@/tasks/entities/task.entity';
 
 @Module({
   imports: [
@@ -23,10 +21,10 @@ import { UserRepository } from './users/users.repository';
       logging: true,
       entities: [UserEntity, TaskEntity],
     }),
-    TasksModule,
     UsersModule,
+    TasksModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ResponseService, UserRepository],
+  providers: [AppService],
 })
 export class AppModule {}

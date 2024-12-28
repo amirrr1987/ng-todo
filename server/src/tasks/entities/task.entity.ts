@@ -2,12 +2,11 @@ import {
   BaseEntity,
   Column,
   Entity,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TaskStatus } from '../dto/base-task.dto';
-import { User as UserEntity } from '../../users/entities/user.entity';
+import { TaskStatus } from '@/tasks/dto/base-task.dto';
+import { User as UserEntity } from '@/users/entities/user.entity';
 
 @Entity({ name: 'tasks' })
 export class Task extends BaseEntity {

@@ -1,7 +1,7 @@
 import {
   CreateTaskRequestDto,
   CreateTaskResponseDto,
-} from '../dto/create-task.dto';
+} from '@/tasks/dto/create-task.dto';
 import {
   AllTaskResponseDto,
   DeleteTaskParamDto,
@@ -11,7 +11,7 @@ import {
   GetOneTaskResponseDto,
   UpdateTaskBodyDto,
   UpdateTaskResponseDto,
-} from '../dto';
+} from '@/tasks/dto';
 
 export interface ITasksService {
   create(dto: CreateTaskRequestDto): Promise<CreateTaskResponseDto>;

@@ -44,6 +44,4 @@ export class UsersService implements IUserService {
     const accessToken = await this.jwtService.sign(payload);
     return { ...omit(auth, ['password']), accessToken };
   }
-
-  
 }
