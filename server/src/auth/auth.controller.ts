@@ -1,8 +1,9 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { IAuthController } from './interfaces/auth.controller.interface';
-import { SignInAuthDto, SignOutAuthDto } from './dto';
-import { User } from '@/users/entities/user.entity';
+import { SignInAuthDto, SignUpAuthDto } from './dto';
+import { UserEntity } from '@/users/entities/user.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController implements IAuthController {
@@ -11,16 +12,18 @@ export class AuthController implements IAuthController {
   @Post('/signIn')
   async signIn(
     @Body() dto: SignInAuthDto,
-  ): Promise<Omit<User, 'password'> & { accessToken: string }> {
+  ): Promise<Omit<UserEntity, 'password'> & { accessToken: string }> {
     return await this.authService.signIn(dto);
   }
 
   @Post('/signUp')
-  async signUp(@Body() dto: SignOutAuthDto): Promise<void> {
+  async signUp(@Body() dto: SignUpAuthDto): Promise<void> {
     return await this.authService.signUp(dto);
   }
-  @Post('/signout')
-  async signOut() {
-    return this.authService.signOut();
+
+  @Post('/test')
+  @UseGuards(AuthGuard('jwt'))
+  test(@Req() req) {
+    console.log(req.user);
   }
 }

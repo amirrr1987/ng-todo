@@ -6,10 +6,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TaskStatus } from '@/tasks/dto/base-task.dto';
-import { User as UserEntity } from '@/users/entities/user.entity';
+import { UserEntity } from '@/users/entities/user.entity';
 
 @Entity({ name: 'tasks' })
-export class Task extends BaseEntity {
+export class TaskEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

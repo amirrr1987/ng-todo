@@ -5,8 +5,8 @@ import {
 } from '@nestjs/common';
 import { IAuthService } from './interfaces/auth.service.interface';
 import { UsersService } from '@/users/users.service';
-import { SignInAuthDto, SignOutAuthDto } from './dto';
-import { User as UserEntity } from '@/users/entities/user.entity';
+import { SignInAuthDto, SignUpAuthDto } from './dto';
+import { UserEntity } from '@/users/entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { omit } from 'lodash';
 import { JwtService } from '@nestjs/jwt';
@@ -17,7 +17,7 @@ export class AuthService implements IAuthService {
     private readonly userService: UsersService,
     private readonly jwtService: JwtService,
   ) {}
-  async signUp(dto: SignOutAuthDto): Promise<void> {
+  async signUp(dto: SignUpAuthDto): Promise<void> {
     const existingUser = await this.userService.findByKeyValue(
       'username',
       dto.username,
@@ -43,9 +43,5 @@ export class AuthService implements IAuthService {
     const payload: JwtPayload = { ...user };
     const accessToken = await this.jwtService.sign(payload);
     return { ...omit(user, ['password']), accessToken };
-  }
-
-  async signOut() {
-    return { message: 'User signed out successfully' };
   }
 }

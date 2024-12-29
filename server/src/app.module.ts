@@ -4,8 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from '@/tasks/tasks.module';
 import { UsersModule } from '@/users/users.module';
-import { User as UserEntity } from '@/users/entities/user.entity';
-import { Task as TaskEntity } from '@/tasks/entities/task.entity';
+import { UserEntity } from '@/users/entities/user.entity';
+import { TaskEntity } from '@/tasks/entities/task.entity';
 import { AuthModule } from './auth/auth.module';
 
 @Module({

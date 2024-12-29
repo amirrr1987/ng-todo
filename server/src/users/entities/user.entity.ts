@@ -5,9 +5,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Task as TasksEntity } from '@/tasks/entities/task.entity';
+import { TaskEntity } from '@/tasks/entities/task.entity';
 @Entity({ name: 'users' })
-export class User extends BaseEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -34,6 +34,6 @@ export class User extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  @ManyToOne(() => TasksEntity, (task) => task.user, { eager: false })
-  tasks: TasksEntity;
+  @ManyToOne(() => TaskEntity, (task) => task.user, { eager: false })
+  tasks: TaskEntity;
 }

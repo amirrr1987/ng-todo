@@ -5,7 +5,7 @@ import {
   RemoveUserDto,
   UpdateUserDto,
 } from '@/users/dto';
-import { User as UserEntity } from '@/users/entities/user.entity';
+import { UserEntity } from '@/users/entities/user.entity';
 export interface IUserService {
   create(dto: CreateUserDto): Promise<UserEntity['id']>;
   findAll(dto: FindAllUserDto): Promise<UserEntity[]>;

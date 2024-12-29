@@ -10,7 +10,7 @@ import { UsersModule } from '@/users/users.module';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: 'topSecret51',
-      signOptions: { expiresIn: '1day' },
+      signOptions: { expiresIn: 3600 },
     }),
     UsersModule,
   ],

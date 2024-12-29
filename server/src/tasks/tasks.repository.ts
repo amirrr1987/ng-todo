@@ -1,6 +1,6 @@
 import { DataSource, Repository } from 'typeorm';
 import { TaskStatus } from './dto/base-task.dto';
-import { Task as TaskEntity } from './entities/task.entity';
+import { TaskEntity } from './entities/task.entity';
 import {
   BadRequestException,
   Injectable,
