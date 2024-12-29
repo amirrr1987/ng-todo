@@ -5,4 +5,4 @@ export class CreateTaskRequestDto extends PickType(BaseTaskDto, [
   'title',
   'description',
 ]) {}
-export type CreateTaskResponseDto = BaseTaskDto;
+export type CreateTaskResponseDto = BaseTaskDto['id'];
