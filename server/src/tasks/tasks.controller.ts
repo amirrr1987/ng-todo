@@ -7,6 +7,7 @@ import {
   Delete,
   Query,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import {
@@ -20,6 +21,8 @@ import { ResponseService } from '@/response/response.service';
 import { AuthGuard } from '@nestjs/passport';
 import { ITasksController } from './interfaces/tasks.controller.interface';
 import { BaseResponse } from './dto/base-task.dto';
+import { GetUser } from '@/auth/common/get-user.decorator';
+import { UserEntity } from '@/users/entities/user.entity';
 
 @Controller('tasks')
 export class TasksController implements ITasksController {
@@ -29,14 +32,17 @@ export class TasksController implements ITasksController {
   ) {}
 
   @Post()
-  // @UseGuards(AuthGuard())
-  async create(@Body() dto: CreateTaskRequestDto): Promise<BaseResponse> {
-    const id = await this.tasksService.create(dto);
+  @UseGuards(AuthGuard())
+  async create(
+    @Body() dto: CreateTaskRequestDto,
+    @GetUser() user: UserEntity,
+  ): Promise<BaseResponse> {
+    const id = await this.tasksService.create(dto, user);
     return this.responseService.create(id);
   }
 
   @Get()
-  // @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   async findAll(
     @Query() query: GetByFilterTaskQueryDto,
   ): Promise<BaseResponse> {
@@ -45,8 +51,9 @@ export class TasksController implements ITasksController {
   }
 
   @Get(':id')
-  // @UseGuards(AuthGuard())
-  async findOne(param: GetOneTaskParamDto): Promise<BaseResponse> {
+  @UseGuards(AuthGuard())
+  async findOne(@Param() param: GetOneTaskParamDto): Promise<BaseResponse> {
+    console.log('🚀 ~ TasksController ~ findOne ~ param:', param);
     const task = await this.tasksService.findOne(param.id);
     return this.responseService.findOne(task);
   }

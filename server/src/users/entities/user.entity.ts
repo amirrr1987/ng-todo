@@ -2,7 +2,7 @@ import {
   BaseEntity,
   Column,
   Entity,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TaskEntity } from '@/tasks/entities/task.entity';
@@ -34,6 +34,6 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  @ManyToOne(() => TaskEntity, (task) => task.user, { eager: false })
-  tasks: TaskEntity;
+  @OneToMany(() => TaskEntity, (task) => task.user, { eager: true })
+  tasks: TaskEntity[];
 }

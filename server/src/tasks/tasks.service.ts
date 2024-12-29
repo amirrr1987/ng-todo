@@ -14,14 +14,19 @@ import {
 } from './dto';
 import { TasksRepository } from './tasks.repository';
 import { ITasksService } from './interfaces/tasks.service.interface';
+import { UserEntity } from '@/users/entities/user.entity';
 
 @Injectable()
 export class TasksService implements ITasksService {
   constructor(private readonly tasksRepository: TasksRepository) {}
 
-  async create(dto: CreateTaskRequestDto): Promise<CreateTaskResponseDto> {
+  async create(
+    dto: CreateTaskRequestDto,
+    user: UserEntity,
+  ): Promise<CreateTaskResponseDto> {
     try {
-      const task = await this.tasksRepository.createTask(dto);
+      const task = await this.tasksRepository.createTask(dto, user);
+      console.log('🚀 ~ TasksService ~ task:', task);
       return task.id;
     } catch (error) {
       console.log(error);

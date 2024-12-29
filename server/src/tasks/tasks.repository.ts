@@ -6,6 +6,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { UserEntity } from '@/users/entities/user.entity';
 
 @Injectable()
 export class TasksRepository extends Repository<TaskEntity> {
@@ -31,8 +32,9 @@ export class TasksRepository extends Repository<TaskEntity> {
     }
     return await query.getMany();
   }
-  async createTask(dto: Partial<TaskEntity>) {
-    const task = await this.create(dto);
+  async createTask(dto: Partial<TaskEntity>, user: UserEntity) {
+    const task = this.create(dto);
+    task.user = user;
     await this.save(task);
     return task;
   }

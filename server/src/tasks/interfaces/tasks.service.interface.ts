@@ -12,9 +12,13 @@ import {
   UpdateTaskBodyDto,
   UpdateTaskResponseDto,
 } from '@/tasks/dto';
+import { UserEntity } from '@/users/entities/user.entity';
 
 export interface ITasksService {
-  create(dto: CreateTaskRequestDto): Promise<CreateTaskResponseDto>;
+  create(
+    dto: CreateTaskRequestDto,
+    user: UserEntity,
+  ): Promise<CreateTaskResponseDto>;
   findAll(query: GetByFilterTaskQueryDto): Promise<AllTaskResponseDto>;
   findOne(dto: GetOneTaskParamDto['id']): Promise<GetOneTaskResponseDto>;
   update(dto: UpdateTaskBodyDto): Promise<UpdateTaskResponseDto>;
