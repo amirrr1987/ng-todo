@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { TaskStatus } from '@/tasks/dto/base-task.dto';
 import { UserEntity } from '@/users/entities/user.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'tasks' })
 export class TaskEntity extends BaseEntity {
@@ -43,5 +44,6 @@ export class TaskEntity extends BaseEntity {
   deletedAt?: Date;
 
   @ManyToOne(() => UserEntity, (user) => user.tasks, { eager: false })
+  @Exclude({ toPlainOnly: true })
   user: UserEntity;
 }

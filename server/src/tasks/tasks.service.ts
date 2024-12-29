@@ -27,7 +27,7 @@ export class TasksService implements ITasksService {
     try {
       const task = await this.tasksRepository.createTask(dto, user);
       console.log('🚀 ~ TasksService ~ task:', task);
-      return task.id;
+      return task;
     } catch (error) {
       console.log(error);
     }

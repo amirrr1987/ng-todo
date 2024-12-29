@@ -38,6 +38,7 @@ export class TasksController implements ITasksController {
     @GetUser() user: UserEntity,
   ): Promise<BaseResponse> {
     const id = await this.tasksService.create(dto, user);
+    console.log('🚀 ~ TasksController ~ id:', id);
     return this.responseService.create(id);
   }
 
