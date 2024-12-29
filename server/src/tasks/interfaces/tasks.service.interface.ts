@@ -19,8 +19,20 @@ export interface ITasksService {
     dto: CreateTaskRequestDto,
     user: UserEntity,
   ): Promise<CreateTaskResponseDto>;
-  findAll(query: GetByFilterTaskQueryDto): Promise<AllTaskResponseDto>;
-  findOne(dto: GetOneTaskParamDto['id']): Promise<GetOneTaskResponseDto>;
-  update(dto: UpdateTaskBodyDto): Promise<UpdateTaskResponseDto>;
-  remove(dto: DeleteTaskParamDto['id']): Promise<DeleteTaskResponseDto>;
+  findAll(
+    query: GetByFilterTaskQueryDto,
+    user: UserEntity,
+  ): Promise<AllTaskResponseDto>;
+  findOne(
+    dto: GetOneTaskParamDto['id'],
+    user: UserEntity,
+  ): Promise<GetOneTaskResponseDto>;
+  update(
+    dto: UpdateTaskBodyDto,
+    user: UserEntity,
+  ): Promise<UpdateTaskResponseDto>;
+  remove(
+    dto: DeleteTaskParamDto['id'],
+    user: UserEntity,
+  ): Promise<DeleteTaskResponseDto>;
 }

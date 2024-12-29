@@ -13,9 +13,10 @@ export class TasksRepository extends Repository<TaskEntity> {
   constructor(protected readonly dataSource: DataSource) {
     super(TaskEntity, dataSource.createEntityManager());
   }
-  async getTaskList(filter) {
+  async getTaskList(filter, user: UserEntity) {
     const { search, status, deactivate } = filter;
     const query = this.createQueryBuilder('task');
+    query.where({ user });
     if (status) {
       query.andWhere(`task.status = :status`, { status });
     }
@@ -25,7 +26,7 @@ export class TasksRepository extends Repository<TaskEntity> {
 
     if (search) {
       query.andWhere(
-        `LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search)`,
+        `(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))`,
         { search: `%${search}%` },
       );
       debugger;

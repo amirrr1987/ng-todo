@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TaskEntity } from '@/tasks/entities/task.entity';
+import { Exclude } from 'class-transformer';
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -34,6 +35,7 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  @OneToMany(() => TaskEntity, (task) => task.user, { eager: true })
+  @OneToMany(() => TaskEntity, (task) => task.user, { eager: false })
+  @Exclude({ toPlainOnly: true })
   tasks: TaskEntity[];
 }

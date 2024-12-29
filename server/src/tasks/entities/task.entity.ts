@@ -43,7 +43,7 @@ export class TaskEntity extends BaseEntity {
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.tasks, { eager: false })
+  @ManyToOne(() => UserEntity, (user) => user.tasks, { eager: true })
   @Exclude({ toPlainOnly: true })
   user: UserEntity;
 }

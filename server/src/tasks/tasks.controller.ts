@@ -45,23 +45,29 @@ export class TasksController implements ITasksController {
   @UseGuards(AuthGuard())
   async findAll(
     @Query() query: GetByFilterTaskQueryDto,
+    @GetUser() user: UserEntity,
   ): Promise<BaseResponse> {
-    const tasks = await this.tasksService.findAll(query);
+    const tasks = await this.tasksService.findAll(query, user);
     return this.responseService.findAll(tasks);
   }
 
   @Get(':id')
   @UseGuards(AuthGuard())
-  async findOne(@Param() param: GetOneTaskParamDto): Promise<BaseResponse> {
-    console.log('🚀 ~ TasksController ~ findOne ~ param:', param);
-    const task = await this.tasksService.findOne(param.id);
+  async findOne(
+    @Param() param: GetOneTaskParamDto,
+    @GetUser() user: UserEntity,
+  ): Promise<BaseResponse> {
+    const task = await this.tasksService.findOne(param.id, user);
     return this.responseService.findOne(task);
   }
 
   @Patch()
   // @UseGuards(AuthGuard())
-  async update(dto: UpdateTaskBodyDto): Promise<BaseResponse> {
-    const task = await this.tasksService.update(dto);
+  async update(
+    dto: UpdateTaskBodyDto,
+    @GetUser() user: UserEntity,
+  ): Promise<BaseResponse> {
+    const task = await this.tasksService.update(dto, user);
     return this.responseService.update(task);
   }
 

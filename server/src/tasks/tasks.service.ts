@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import * as _ from 'lodash';
 
 import {
@@ -32,16 +32,31 @@ export class TasksService implements ITasksService {
     }
   }
 
-  async findAll(query): Promise<AllTaskResponseDto> {
-    return await this.tasksRepository.getTaskList(query);
+  async findAll(query, user): Promise<AllTaskResponseDto> {
+    return await this.tasksRepository.getTaskList(query, user);
   }
 
-  async findOne(id: GetOneTaskParamDto['id']): Promise<GetOneTaskResponseDto> {
-    return await this.tasksRepository.findOneBy({ id });
+  async findOne(
+    id: GetOneTaskParamDto['id'],
+    user: UserEntity,
+  ): Promise<GetOneTaskResponseDto> {
+    console.log('🚀 ~ TasksService ~ user:', user);
+    const found = await this.tasksRepository.findOneBy({
+      id,
+      user: { id: user.id },
+    });
+    console.log('🚀 ~ TasksService ~ found:', found);
+    if (!found) {
+      throw new NotFoundException(`Task width ID ${id} not found`);
+    }
+    return found;
   }
 
-  async update(dto: UpdateTaskBodyDto): Promise<UpdateTaskResponseDto> {
-    const task = await this.findOne(dto.id);
+  async update(
+    dto: UpdateTaskBodyDto,
+    user: UserEntity,
+  ): Promise<UpdateTaskResponseDto> {
+    const task = await this.findOne(dto.id, user);
     _.assign(
       task,
       _.pick(dto, ['description', 'status', 'title', 'deactivate']),
