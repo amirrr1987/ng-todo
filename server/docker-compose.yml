@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nestjs-app
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: amir
+      DATABASE_PASSWORD: 0251
+      DATABASE_NAME: task-management
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    container_name: task-db
+    environment:
+      POSTGRES_USER: amir
+      POSTGRES_PASSWORD: 0251
+      POSTGRES_DB: task-management
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
