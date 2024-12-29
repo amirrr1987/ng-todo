@@ -67,8 +67,15 @@ export class TasksService implements ITasksService {
     return dto.id;
   }
 
-  async remove(id: DeleteTaskParamDto['id']): Promise<DeleteTaskResponseDto> {
-    await this.tasksRepository.delete(id);
+  async remove(
+    id: DeleteTaskParamDto['id'],
+    user: UserEntity,
+  ): Promise<DeleteTaskResponseDto> {
+    if (!id || !user) {
+      throw new Error('Invalid input: id or user is missing');
+    }
+
+    await this.tasksRepository.delete({ id, user });
     return id;
   }
 }

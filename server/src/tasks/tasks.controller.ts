@@ -62,7 +62,7 @@ export class TasksController implements ITasksController {
   }
 
   @Patch()
-  // @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   async update(
     dto: UpdateTaskBodyDto,
     @GetUser() user: UserEntity,
@@ -72,9 +72,12 @@ export class TasksController implements ITasksController {
   }
 
   @Delete(':id')
-  // @UseGuards(AuthGuard())
-  async remove(param: DeleteTaskParamDto): Promise<BaseResponse> {
-    const taskId = await this.tasksService.remove(param.id);
+  @UseGuards(AuthGuard())
+  async remove(
+    @Param() param: DeleteTaskParamDto,
+    @GetUser() user: UserEntity,
+  ): Promise<BaseResponse> {
+    const taskId = await this.tasksService.remove(param.id, user);
     return this.responseService.remove(taskId);
   }
 }
