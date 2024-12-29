@@ -8,6 +8,7 @@ import {
   Query,
   UseGuards,
   Param,
+  Logger,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import {
@@ -26,6 +27,7 @@ import { UserEntity } from '@/users/entities/user.entity';
 
 @Controller('tasks')
 export class TasksController implements ITasksController {
+  private logger = new Logger('Task controller');
   constructor(
     private readonly tasksService: TasksService,
     private readonly responseService: ResponseService,
@@ -37,6 +39,9 @@ export class TasksController implements ITasksController {
     @Body() dto: CreateTaskRequestDto,
     @GetUser() user: UserEntity,
   ): Promise<BaseResponse> {
+    this.logger.verbose(
+      `User ${user.username} creating a new task. Data: ${JSON.stringify(dto)}`,
+    );
     const id = await this.tasksService.create(dto, user);
     return this.responseService.create(id);
   }
@@ -47,6 +52,9 @@ export class TasksController implements ITasksController {
     @Query() query: GetByFilterTaskQueryDto,
     @GetUser() user: UserEntity,
   ): Promise<BaseResponse> {
+    this.logger.verbose(
+      `User "${user.username} retrieving all tasks. Flitters: ${JSON.stringify(query)}`,
+    );
     const tasks = await this.tasksService.findAll(query, user);
     return this.responseService.findAll(tasks);
   }

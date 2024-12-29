@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { TransformInterceptor } from './transform.interceptor';
 
 async function bootstrap() {
@@ -16,9 +16,11 @@ async function bootstrap() {
     origin: '*',
   });
   app.useGlobalInterceptors(new TransformInterceptor());
-
+  const logger = new Logger();
   app.setGlobalPrefix('api');
-  await app.listen(5000);
+  const port = 5000;
+  await app.listen(port);
+  logger.log(`Application listening on port ${port}`);
 }
 
 bootstrap();

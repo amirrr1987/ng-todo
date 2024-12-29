@@ -4,12 +4,15 @@ import { TaskEntity } from './entities/task.entity';
 import {
   BadRequestException,
   Injectable,
+  InternalServerErrorException,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { UserEntity } from '@/users/entities/user.entity';
 
 @Injectable()
 export class TasksRepository extends Repository<TaskEntity> {
+  private logger = new Logger('Tasks Repository');
   constructor(protected readonly dataSource: DataSource) {
     super(TaskEntity, dataSource.createEntityManager());
   }
@@ -29,15 +32,29 @@ export class TasksRepository extends Repository<TaskEntity> {
         `(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) LIKE LOWER(:search))`,
         { search: `%${search}%` },
       );
-      debugger;
     }
-    return await query.getMany();
+    try {
+      return await query.getMany();
+    } catch (error) {
+      this.logger.error(
+        `Failed to get tasks for user "${user.username}". Filters: ${JSON.stringify(filter)}`,
+      );
+      throw new InternalServerErrorException();
+    }
   }
   async createTask(dto: Partial<TaskEntity>, user: UserEntity) {
     const task = this.create(dto);
     task.user = user;
-    await this.save(task);
-    return task;
+    try {
+      await this.save(task);
+      return task;
+    } catch (error) {
+      this.logger.error(
+        `Failed to create task for user "${user.username}". Data: ${JSON.stringify(dto)}`,
+        error.stack,
+      );
+      throw new InternalServerErrorException();
+    }
   }
   async isValid(id): Promise<number> {
     if (!id) {
