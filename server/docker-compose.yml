@@ -5,9 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: nestjs-app
+    container_name: nest-tasks-app
     ports:
-      - "5000:5000"
+      - '5000:5000'
     environment:
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
@@ -19,13 +19,13 @@ services:
 
   postgres:
     image: postgres:latest
-    container_name: task-db
+    container_name: nest-tasks-db
     environment:
       POSTGRES_USER: amir
       POSTGRES_PASSWORD: 0251
       POSTGRES_DB: task-management
     ports:
-      - "5434:5432"
+      - '5334:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
