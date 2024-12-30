@@ -9,11 +9,12 @@ services:
     ports:
       - '5000:5000'
     environment:
-      DATABASE_HOST: postgres
-      DATABASE_PORT: 5432
-      DATABASE_USER: amir
-      DATABASE_PASSWORD: 0251
-      DATABASE_NAME: task-management
+      STAGE: development
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: amir
+      DB_PASSWORD: 0251
+      DB_DATABASE: task-management
     depends_on:
       - postgres
 

@@ -4,23 +4,38 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TasksModule } from '@/tasks/tasks.module';
 import { UsersModule } from '@/users/users.module';
-import { UserEntity } from '@/users/entities/user.entity';
-import { TaskEntity } from '@/tasks/entities/task.entity';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { envSchema } from './config/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT, 10),
-      username: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      // autoLoadEntities: true,
-      synchronize: true,
-      logging: true,
-      entities: [UserEntity, TaskEntity],
+    ConfigModule.forRoot({
+      envFilePath: [`.env.stage.${process.env.STAGE}`],
+      validate: (config) => {
+        const parsed = envSchema.safeParse(config);
+        if (!parsed.success) {
+          console.error('Environment validation error:', parsed.error.format());
+          throw new Error('Invalid environment variables');
+        }
+        return parsed.data;
+      },
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          type: 'postgres',
+          autoLoadEntities: true,
+          synchronize: true,
+          host: configService.get<string>('DB_HOST'),
+          port: parseInt(configService.get<string>('DB_PORT'), 10),
+          username: configService.get<string>('DB_USERNAME'),
+          password: String(configService.get<string>('DB_PASSWORD')),
+          database: configService.get<string>('DB_DATABASE'),
+        };
+      },
     }),
     UsersModule,
     TasksModule,
