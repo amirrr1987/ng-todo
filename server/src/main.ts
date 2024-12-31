@@ -18,7 +18,7 @@ async function bootstrap() {
   app.useGlobalInterceptors(new TransformInterceptor());
   const logger = new Logger();
   app.setGlobalPrefix('api');
-  const port = 5000;
+  const port = process.env.APP_PORT;
   await app.listen(port);
   logger.log(`Application listening on port ${port}`);
 }
