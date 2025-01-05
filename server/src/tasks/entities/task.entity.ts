@@ -5,8 +5,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TaskStatus } from '@/tasks/dto/base-task.dto';
-import { UserEntity } from '@/users/entities/user.entity';
+import { TaskStatus } from '../../tasks/dto/base-task.dto';
+import { UserEntity } from '../../users/entities/user.entity';
 import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'tasks' })

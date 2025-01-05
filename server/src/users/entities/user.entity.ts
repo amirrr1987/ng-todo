@@ -5,7 +5,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TaskEntity } from '@/tasks/entities/task.entity';
+import { TaskEntity } from '../../tasks/entities/task.entity';
 import { Exclude } from 'class-transformer';
 @Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
