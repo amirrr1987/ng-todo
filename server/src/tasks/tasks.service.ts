@@ -40,12 +40,10 @@ export class TasksService implements ITasksService {
     id: GetOneTaskParamDto['id'],
     user: UserEntity,
   ): Promise<GetOneTaskResponseDto> {
-    console.log('🚀 ~ TasksService ~ user:', user);
     const found = await this.tasksRepository.findOneBy({
       id,
       user: { id: user.id },
     });
-    console.log('🚀 ~ TasksService ~ found:', found);
     if (!found) {
       throw new NotFoundException(`Task width ID ${id} not found`);
     }
